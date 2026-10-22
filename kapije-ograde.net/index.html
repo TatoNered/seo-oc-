@@ -1,0 +1,580 @@
+<title>SEO audit kapije-ograde.net</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: jedna kolona dokumenta (mera reda ~68ch), pune tabele i kartice problema sa trakom ozbiljnosti */
+  :root {
+    --bg: #f5f4f2;
+    --surface: #ffffff;
+    --surface-2: #eceae6;
+    --fg: #1b1d20;
+    --fg-muted: #5c6066;
+    --line: #d6d3cd;
+    --line-strong: #b3afa8;
+    --accent: #a8431c;
+    --accent-soft: #f3e2da;
+    --crit: #a3271f;
+    --warn: #9a6a08;
+    --ok: #2f6b45;
+    --crit-bg: #f7e4e1;
+    --warn-bg: #f8edd6;
+    --ok-bg: #e2efe6;
+    --display: "Saira Condensed", "Arial Narrow", Helvetica, sans-serif;
+    --body: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14161a;
+      --surface: #1c1f24;
+      --surface-2: #23272d;
+      --fg: #e8e6e2;
+      --fg-muted: #9aa0a8;
+      --line: #32373e;
+      --line-strong: #4a5057;
+      --accent: #e0825a;
+      --accent-soft: #3a2419;
+      --crit: #ef8378;
+      --warn: #e0b55f;
+      --ok: #76c294;
+      --crit-bg: #33201e;
+      --warn-bg: #322a16;
+      --ok-bg: #1c2b22;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14161a;
+    --surface: #1c1f24;
+    --surface-2: #23272d;
+    --fg: #e8e6e2;
+    --fg-muted: #9aa0a8;
+    --line: #32373e;
+    --line-strong: #4a5057;
+    --accent: #e0825a;
+    --accent-soft: #3a2419;
+    --crit: #ef8378;
+    --warn: #e0b55f;
+    --ok: #76c294;
+    --crit-bg: #33201e;
+    --warn-bg: #322a16;
+    --ok-bg: #1c2b22;
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0 72px;
+  }
+  h1, h2, h3, h4 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; line-height: 1.12; letter-spacing: 0.005em; }
+  h1 { font-size: clamp(2rem, 6vw, 3.1rem); font-weight: 700; }
+  h2 { font-size: clamp(1.5rem, 4vw, 2.05rem); }
+  h3 { font-size: 1.22rem; }
+  h4 { font-size: 1.02rem; font-family: var(--body); font-weight: 600; }
+  p, li { max-width: 68ch; }
+  p { margin: 0; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  code, .mono { font-family: var(--mono); font-size: 0.86em; }
+
+  /* zaglavlje */
+  header.doc { padding-block: 48px 28px; border-bottom: 3px solid var(--fg); display: flex; flex-direction: column; gap: 18px; }
+  .eyebrow { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-muted); }
+  .lede { font-size: 1.1rem; color: var(--fg-muted); }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px 24px; font-family: var(--mono); font-size: 0.78rem; color: var(--fg-muted); }
+
+  section { padding-block: 44px 0; display: flex; flex-direction: column; gap: 18px; }
+  section > h2 { display: flex; align-items: baseline; gap: 12px; }
+  .num { font-family: var(--mono); font-size: 0.8rem; color: var(--accent); flex: none; padding-top: 4px; }
+  .rule { height: 1px; background: var(--line); border: 0; margin: 0; }
+
+  /* brojevi */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .stat { background: var(--surface); padding: 16px 18px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .stat b { font-family: var(--display); font-size: 2.1rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 0.8rem; color: var(--fg-muted); }
+  .stat.bad b { color: var(--crit); }
+  .stat.warn b { color: var(--warn); }
+
+  /* tabele */
+  .t-scroll { overflow-x: auto; border: 1px solid var(--line); background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th { background: var(--surface-2); font-family: var(--body); font-weight: 600; font-size: 0.76rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--fg-muted); white-space: nowrap; position: sticky; top: 0; }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.num-cell { font-variant-numeric: tabular-nums; font-family: var(--mono); white-space: nowrap; }
+  td code { white-space: nowrap; }
+  .nowrap { white-space: nowrap; }
+
+  /* oznake */
+  .tag { display: inline-block; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 7px; border-radius: 2px; white-space: nowrap; }
+  .tag.c { background: var(--crit-bg); color: var(--crit); }
+  .tag.w { background: var(--warn-bg); color: var(--warn); }
+  .tag.i { background: var(--surface-2); color: var(--fg-muted); }
+  .tag.g { background: var(--ok-bg); color: var(--ok); }
+
+  /* kartice sa trakom */
+  .cards { display: grid; gap: 14px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--line-strong); padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .card.c { border-left-color: var(--crit); }
+  .card.w { border-left-color: var(--warn); }
+  .card h4 { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .card p { font-size: 0.93rem; }
+  .card .fix { font-size: 0.9rem; color: var(--fg-muted); border-top: 1px dashed var(--line); padding-top: 8px; }
+  .card .fix b { color: var(--fg); font-weight: 600; }
+
+  ul, ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+  li::marker { color: var(--accent); }
+
+  blockquote { margin: 0; padding: 14px 18px; background: var(--accent-soft); border-left: 4px solid var(--accent); font-size: 0.97rem; }
+  blockquote p + p { margin-top: 8px; }
+
+  .callout { background: var(--surface); border: 1px solid var(--line-strong); padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+  .callout .eyebrow { color: var(--accent); }
+
+  .phase { background: var(--surface); border: 1px solid var(--line); padding: 18px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .phase header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 14px; }
+  .phase header h3 { margin-right: auto; }
+  .phase .when { font-family: var(--mono); font-size: 0.76rem; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; }
+
+  .cluster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .cluster { background: var(--surface); border: 1px solid var(--line); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .cluster h4 { font-family: var(--display); font-size: 1.1rem; font-weight: 600; }
+  .cluster ul { padding-left: 16px; font-size: 0.88rem; }
+  .cluster .hint { font-size: 0.8rem; color: var(--fg-muted); }
+
+  footer.doc { margin-top: 56px; padding-top: 20px; border-top: 3px solid var(--fg); font-size: 0.84rem; color: var(--fg-muted); display: flex; flex-direction: column; gap: 6px; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    a, .card { transition: border-color .15s ease, color .15s ease; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="doc">
+    <div class="eyebrow">SEO revizija &middot; oktobar 2026</div>
+    <h1>Kapije i ograde Beograd &mdash; SEO revizija sajta</h1>
+    <p class="lede">Sajt <strong>kapije-ograde.net</strong> postoji od 2012. godine i danas radi protiv vas: tehnički je zastareo, nijedna strana nema dovoljno sadržaja da se rangira, a šest od četrnaest strana nije povezano ni jednim internim linkom. Ovaj dokument pokazuje šta je tačno pokvareno, kako stoji konkurencija i šta se realno može dobiti u šest meseci.</p>
+    <div class="meta-row">
+      <span>Domen: www.kapije-ograde.net</span>
+      <span>Obuhvat: 14 strana</span>
+      <span>Alat: Parsi crawler + ručna provera</span>
+    </div>
+  </header>
+
+  <section>
+    <h2><span class="num">01</span> Rezime stanja</h2>
+    <div class="stats">
+      <div class="stat bad"><b>81</b><span>pronađen problem</span></div>
+      <div class="stat bad"><b>13/14</b><span>strana sa tankim sadržajem</span></div>
+      <div class="stat bad"><b>6</b><span>strana bez internih linkova</span></div>
+      <div class="stat bad"><b>0</b><span>strana sa schema.org oznakama</span></div>
+      <div class="stat warn"><b>12/14</b><span>prekratkih title oznaka</span></div>
+      <div class="stat warn"><b>9</b><span>strana bez meta description</span></div>
+    </div>
+    <p>Sve strane vraćaju kod 200 i sve su u sitemap-u &mdash; sa strane indeksiranja nema prepreka. Problem je drugi: na sajtu praktično nema sadržaja koji bi Google mogao da rangira. Prosečna strana ima između <strong>16 i 124 reči</strong> osnovnog teksta, a jedina strana koja prelazi 400 reči je <code>/metalne-garaze/</code> &mdash; i ona je, nije slučajno, jedina napisana kao prava uslužna strana.</p>
+    <blockquote>
+      <p><strong>Glavni zaključak.</strong> Sajt nije kažnjen i nije pokvaren &mdash; on je nedovršen. Postoje imena strana („Kapije“, „Ograde“, „Gelenderi“), ali ne postoje same strane: svaka ima naslov, dve fotografije i jednu rečenicu teksta. Google nema šta da rangira.</p>
+      <p>Druga strana te priče je dobra vest: vaša konkurencija u Beogradu je u sličnom stanju, a prvu stranu rezultata drže oglasnici i imenici, ne firme. Prostor je otvoren.</p>
+    </blockquote>
+    <div class="callout">
+      <div class="eyebrow">Prvo što treba uraditi</div>
+      <p>U reviziji nijedna strana ne beleži prikaze u pretrazi. To znači jedno od dva: ili Google Search Console nije povezan sa sajtom, ili sajt zaista nema vidljivost. Pre bilo kog drugog koraka povezujemo <strong>Search Console</strong> i <strong>Google Analytics 4</strong>, da svaka kasnija tvrdnja o rezultatu ima merljivu osnovu.</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h2><span class="num">02</span> Šta tačno koči sajt</h2>
+    <p>Problemi su poređani po tome koliko utiču na pozicije, ne po tome koliko ih je lako ispraviti.</p>
+
+    <div class="cards">
+
+      <div class="card c">
+        <h4>Tanak sadržaj na 13 od 14 strana <span class="tag c">kritično</span></h4>
+        <p>Strana <code>/gelenderi/</code> ima 16 reči teksta. <code>/ograde/</code> ima 18. <code>/kapije/</code> ima 33. To nisu uslužne strane, to su natpisi. Za komercijalne upite tipa „kapije Beograd“ ili „metalne ograde cena“ Google rangira strane sa 700&ndash;1500 reči koje odgovaraju na pitanja o materijalu, dimenzijama, ceni, roku i montaži.</p>
+        <p class="fix"><b>Rešenje:</b> svaka od šest glavnih uslužnih strana dobija 700&ndash;1200 reči: vrste proizvoda, materijali i zaštita od korozije, raspon cena, način merenja, rok izrade, montaža, galerija radova sa tom uslugom i poziv na akciju.</p>
+      </div>
+
+      <div class="card c">
+        <h4>Šest strana nema ni jedan interni link <span class="tag c">kritično</span></h4>
+        <p>Bez linka ka strani Google je teže otkriva i tretira je kao nevažnu. Među „siročićima“ su upravo strane koje bi trebalo da dovode poslove:</p>
+        <ul>
+          <li><code>/kapije/</code> &mdash; glavna usluga</li>
+          <li><code>/ograde/</code> &mdash; glavna usluga</li>
+          <li><code>/gelenderi/</code> &mdash; glavna usluga</li>
+          <li><code>/kapije-novo/</code>, <code>/galerija-novo/</code>, <code>/knjiga-utisaka-2/</code></li>
+        </ul>
+        <p>U meniju se vide samo Početna, O nama, Galerija, Kontakt i Metalne garaže. Tri najvažnije usluge na sajtu nisu u navigaciji.</p>
+        <p class="fix"><b>Rešenje:</b> novi meni sa uslugama na prvom nivou, podstrane u padajućem meniju, mrvice (breadcrumbs) i unakrsni linkovi u tekstu između povezanih usluga.</p>
+      </div>
+
+      <div class="card c">
+        <h4>Dupliranje strana i kanibalizacija upita <span class="tag c">kritično</span></h4>
+        <p>Za iste upite postoji po nekoliko strana koje se međusobno nadmeću:</p>
+        <div class="t-scroll">
+          <table>
+            <thead><tr><th>Tema</th><th>Postojeće strane</th><th>Postupak</th></tr></thead>
+            <tbody>
+              <tr><td>Kapije</td><td><code>/kapije/</code>, <code>/kapije-novo/</code>, <code>/kapija-kovano-gvozdje/</code></td><td>jedna glavna strana + podstrana za kovano gvožđe, ostalo 301</td></tr>
+              <tr><td>Ograde</td><td><code>/ograde/</code>, <code>/ograda/</code>, <code>/druga-ograd/</code></td><td>jedna glavna strana, ostalo 301</td></tr>
+              <tr><td>Galerija</td><td><code>/galerija/</code>, <code>/galerija-novo/</code></td><td>jedna galerija sa filterima po usluzi</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="fix"><b>Rešenje:</b> spajanje sadržaja u jednu stranu po temi i trajno preusmerenje (301) sa ostalih. Nikad brisanje bez preusmerenja.</p>
+      </div>
+
+      <div class="card w">
+        <h4>Uslužne strane su napravljene kao blog objave <span class="tag w">važno</span></h4>
+        <p>Na stranama <code>/ograda/</code>, <code>/druga-ograd/</code> i <code>/kapija-kovano-gvozdje/</code> stoje naslovi „About the Author: goranst82“ i „Related Posts“, a sajt ima i arhivu autora <code>/author/goranst82/</code> na koju vodi 16 internih linkova, kao i kategoriju <code>/category/uncategorized/</code>. To su strane bez vrednosti za pretragu koje rasipaju interne linkove.</p>
+        <p class="fix"><b>Rešenje:</b> prebaciti usluge u tip „strana“, isključiti arhive autora i prazne kategorije iz indeksa, osloboditi interne linkove za prave uslužne strane.</p>
+      </div>
+
+      <div class="card w">
+        <h4>Title i description nisu iskorišćeni <span class="tag w">važno</span></h4>
+        <p>Dvanaest title oznaka je prekratko: „Kapije“ (6 znakova), „Ograde“ (6), „Kontakt“ (7), „O nama“ (6). Na devet strana nema meta description. Na početnoj strani title je 68 znakova (Google seče na oko 60), opis počinje istim rečima kao title, a <strong>oznake <code>&lt;h1&gt;</code> nema uopšte</strong>.</p>
+        <p class="fix"><b>Rešenje:</b> šablon „usluga + materijal + grad + firma“, 50&ndash;60 znakova. Primer: <code>Metalne kapije Beograd &mdash; izrada i montaža po meri | Bravarija Vranić</code>. Opis 120&ndash;155 znakova sa jasnom ponudom (besplatan izlazak na merenje, rok, garancija).</p>
+      </div>
+
+      <div class="card w">
+        <h4>Nema nijedne schema.org oznake <span class="tag w">važno</span></h4>
+        <p>Na svih 14 strana nema strukturiranih podataka. Za lokalnu bravarsku radnju to je direktno izgubljena vidljivost: ocene, radno vreme, telefon i usluge mogli bi da se prikazuju u rezultatima.</p>
+        <p class="fix"><b>Rešenje:</b> JSON-LD <code>LocalBusiness</code> sa adresom, telefonom, radnim vremenom i područjem rada, <code>Service</code> na svakoj uslužnoj strani, <code>BreadcrumbList</code>, <code>ImageObject</code> u galeriji i <code>FAQPage</code> gde postoje pitanja i odgovori.</p>
+      </div>
+
+      <div class="card w">
+        <h4>Veze ka mrtvim i stranim sajtovima <span class="tag w">važno</span></h4>
+        <p>U obilasku je nađeno <strong>42 linka ka <code>plus.google.com</code></strong> &mdash; Google+ je zatvoren 2019. godine, dakle svaka strana sajta vodi na nepostojeći servis. Uz to, podnožje sa svake strane vodi preko nesigurnog <code>http://</code> ka sajtovima izrađivača (17 linkova), a na <code>/knjiga-utisaka-2/</code> jedan resurs se učitava preko <code>http://</code> na https strani (mixed content).</p>
+        <p class="fix"><b>Rešenje:</b> ukloniti Google+ ikonice i linkove, spoljne linkove staviti na <code>rel="nofollow"</code> ili ih skloniti, sve resurse prebaciti na https.</p>
+      </div>
+
+      <div class="card w">
+        <h4>Nema forme za upit, cena ni poziva na akciju <span class="tag w">važno</span></h4>
+        <p>Kontakt je samo telefon i Gmail adresa. Nema forme, nema obračuna ili raspona cena, nema jasnog „pošaljite upit“ dugmeta, nema podataka o firmi (PIB, matični broj, adresa radionice). To obara i konverziju i poverenje, a poverenje je faktor rangiranja za usluge ovog tipa.</p>
+        <p class="fix"><b>Rešenje:</b> forma „pošaljite dimenzije i fotografiju“ na svakoj uslužnoj strani, orijentacioni raspon cena po metru, podaci o firmi u podnožju, dugme za WhatsApp i Viber.</p>
+      </div>
+
+      <div class="card">
+        <h4>Slike bez alt opisa i bez optimizacije <span class="tag i">srednje</span></h4>
+        <p>Na sedam strana ukupno deset slika nema <code>alt</code> atribut. Fotografije se učitavaju iz <code>wp-content/uploads/2012/</code> u formatu i dimenzijama od 2012. godine. Za bravarsku firmu galerija je glavni prodajni argument i izvor saobraćaja iz Google Images.</p>
+        <p class="fix"><b>Rešenje:</b> opisni <code>alt</code> („klizna kapija od kovanog gvožđa, Voždovac“), nazivi datoteka na latinici bez srpskih znakova, konverzija u WebP, odloženo učitavanje, i merenje brzine kroz PageSpeed Insights pre i posle.</p>
+      </div>
+
+      <div class="card">
+        <h4>Nema bezbednosnih zaglavlja <span class="tag i">srednje</span></h4>
+        <p>Na svih 14 strana nedostaju <code>Strict-Transport-Security</code>, <code>Content-Security-Policy</code>, <code>X-Frame-Options</code> i <code>X-Content-Type-Options</code>. To nije direktan faktor rangiranja, ali je pokazatelj zapuštenog hostinga i rizik za sajt na starom WordPress-u.</p>
+        <p class="fix"><b>Rešenje:</b> dodavanje zaglavlja na nivou servera, ažuriranje WordPress-a, teme i dodataka, provera da li <code>http://</code> i verzija bez <code>www</code> ispravno preusmeravaju na <code>https://www</code>.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h2><span class="num">03</span> Strana po strani</h2>
+    <p>Pregled svih strana koje je crawler obišao. „Reči“ je ukupan broj reči na strani; osnovni tekst je po pravilu znatno manji (na početnoj 98 od 331).</p>
+    <div class="t-scroll">
+      <table>
+        <thead>
+          <tr><th>Strana</th><th class="nowrap">Title</th><th class="nowrap">Desc</th><th class="nowrap">H1</th><th class="nowrap">Reči</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>/</code></td><td class="num-cell">68</td><td class="num-cell">119</td><td><span class="tag c">nema</span></td><td class="num-cell">331</td><td>title predug, opis ponavlja title, nema H1</td></tr>
+          <tr><td><code>/metalne-garaze/</code></td><td class="num-cell">49</td><td class="num-cell">133</td><td><span class="tag g">ok</span></td><td class="num-cell">484</td><td>najbolja strana na sajtu &mdash; uzor za ostale</td></tr>
+          <tr><td><code>/o-nama/</code></td><td class="num-cell">6</td><td><span class="tag c">nema</span></td><td><span class="tag g">ok</span></td><td class="num-cell">264</td><td>title i opis prazni, nedostaju podaci o firmi</td></tr>
+          <tr><td><code>/knjiga-utisaka-2/</code></td><td class="num-cell">14</td><td><span class="tag c">nema</span></td><td><span class="tag g">ok</span></td><td class="num-cell">198</td><td>siroče, mixed content, nepovezano sa Google ocenama</td></tr>
+          <tr><td><code>/kontakt/</code></td><td class="num-cell">7</td><td><span class="tag c">nema</span></td><td><span class="tag g">ok</span></td><td class="num-cell">185</td><td>bez forme, bez mape, bez radnog vremena</td></tr>
+          <tr><td><code>/kapija-kovano-gvozdje/</code></td><td class="num-cell">21</td><td><span class="tag c">nema</span></td><td><span class="tag g">ok</span></td><td class="num-cell">178</td><td>blog objava, „About the Author“, 2 slike bez alt</td></tr>
+          <tr><td><code>/druga-ograd/</code></td><td class="num-cell">12</td><td><span class="tag c">nema</span></td><td><span class="tag g">ok</span></td><td class="num-cell">178</td><td>duplikat teme „ograde“, loš URL</td></tr>
+          <tr><td><code>/ograda/</code></td><td class="num-cell">6</td><td><span class="tag c">nema</span></td><td><span class="tag g">ok</span></td><td class="num-cell">176</td><td>duplikat teme „ograde“</td></tr>
+          <tr><td><code>/galerija/</code></td><td class="num-cell">8</td><td><span class="tag c">nema</span></td><td><span class="tag g">ok</span></td><td class="num-cell">155</td><td>13 slika, bez opisa i bez veze sa uslugama</td></tr>
+          <tr><td><code>/ograde/</code></td><td class="num-cell">6</td><td class="num-cell">66</td><td><span class="tag g">ok</span></td><td class="num-cell">143</td><td>siroče, 18 reči osnovnog teksta</td></tr>
+          <tr><td><code>/kapije-novo/</code></td><td class="num-cell">11</td><td><span class="tag c">nema</span></td><td><span class="tag g">ok</span></td><td class="num-cell">142</td><td>siroče, 35 reči, duplira <code>/kapije/</code></td></tr>
+          <tr><td><code>/gelenderi/</code></td><td class="num-cell">9</td><td class="num-cell">150</td><td><span class="tag g">ok</span></td><td class="num-cell">141</td><td>siroče, 16 reči osnovnog teksta</td></tr>
+          <tr><td><code>/kapije/</code></td><td class="num-cell">6</td><td class="num-cell">47</td><td><span class="tag g">ok</span></td><td class="num-cell">140</td><td>siroče, 33 reči, opis je spisak ključnih reči</td></tr>
+          <tr><td><code>/galerija-novo/</code></td><td class="num-cell">13</td><td><span class="tag c">nema</span></td><td><span class="tag g">ok</span></td><td class="num-cell">140</td><td>siroče, duplira <code>/galerija/</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h2><span class="num">04</span> Google Business Profile i poverenje</h2>
+    <p>Za bravarsku radnju u Beogradu lokalni rezultati (mapa i „tri rezultata“ iznad organskih) često donose više poziva nego sam sajt. Profil <strong>Bravarija Vranić</strong> postoji, ima ocenu 5,0 i radno vreme, ali svega nekoliko ocena &mdash; dok konkurentske radnje u okolini imaju po 18 do 68 ocena. U lokalnoj pretrazi broj i svežina ocena su među najjačim faktorima.</p>
+    <p>Ocene na profilu takođe pominju usluge koje na sajtu <strong>ne postoje kao strane</strong>: nadstrešnice od leksana i zatvaranje terasa leksanom. Kupci ih traže i hvale, a sajt o njima ne govori ništa.</p>
+    <div class="cards">
+      <div class="card w">
+        <h4>Plan za lokalni deo <span class="tag w">važno</span></h4>
+        <ul>
+          <li>dopuniti profil: sve kategorije usluga, opis, područje rada, tačna adresa radionice</li>
+          <li>objave na profilu dva do četiri puta mesečno sa fotografijama gotovih radova</li>
+          <li>uveden postupak traženja ocena: SMS ili QR kod sa linkom posle svake montaže, cilj 20+ ocena u šest meseci</li>
+          <li>upis u srpske imenike i oglasnike (planplus.rs, navidiku.rs, halooglasi, KupujemProdajem, mojmajstor) &mdash; identični podaci o firmi na svim mestima</li>
+          <li>Google ocene prikazati na sajtu umesto trenutne nepovezane „knjige utisaka“</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h2><span class="num">05</span> Konkurencija i stanje tržišta</h2>
+    <p>Pretraga je proverena za upite kojima kupci traže ove usluge: <em>kapije i ograde Beograd</em>, <em>metalne ograde cena</em>, <em>kovane kapije</em>, <em>gelenderi za stepenice</em>, <em>nadstrešnice od leksana</em>. Slika je ista za sve.</p>
+
+    <div class="cards">
+      <div class="card">
+        <h4>Prvu stranu drže oglasnici, ne firme <span class="tag g">prilika</span></h4>
+        <p>Rezultate zauzimaju <code>navidiku.rs</code>, <code>planplus.rs</code>, <code>halooglasi.com</code>, <code>kupujemprodajem.com</code>, <code>mirandre.com</code>, a za deo upita se rangiraju i hrvatski sajtovi (<code>emajstor.hr</code>). Kada imenici drže prvu stranu, to znači da nema dovoljno dobrih sajtova firmi &mdash; sajt sa pravim uslužnim stranama ulazi u tu pretragu relativno lako.</p>
+      </div>
+      <div class="card">
+        <h4>Najozbiljniji konkurent ima strukturu, ali ne i sadržaj <span class="tag g">prilika</span></h4>
+        <p><code>kapijeiograde.com</code> ima ono što vama nedostaje: razrađene kategorije (ograde za dvorište i za terasu, klizne i dvokrilne kapije, panelne, aluminijumske, CNC). Ali i njihova početna strana ima oko 300 reči, nema strukturiranih podataka, a blog i katalog su linkovani samo iz podnožja. Dakle i lider u niši je pobediv sadržajem.</p>
+      </div>
+      <div class="card">
+        <h4>Dve prednosti koje konkurencija nema <span class="tag g">prilika</span></h4>
+        <ul>
+          <li><strong>Starina domena.</strong> Domen radi od 2012. godine &mdash; to je istorija koju novi konkurenti ne mogu da kupe. Sadržaj na starom domenu se obično rangira brže.</li>
+          <li><strong>Širina usluga.</strong> Kapije, ograde, gelenderi, metalne garaže, nadstrešnice od leksana, rešetke i opšti bravarski radovi. To je šest do sedam odvojenih grupa upita; većina konkurenata pokriva dve do tri.</li>
+        </ul>
+      </div>
+      <div class="card c">
+        <h4>Gde zaostajete <span class="tag c">rizik</span></h4>
+        <ul>
+          <li>bez cena i formi na sajtu, dok oglasnici prikazuju i cenu i kontakt odmah</li>
+          <li>nekoliko ocena na Google profilu prema desetinama kod konkurenata</li>
+          <li>bez bloga i bez ikakvog sadržaja koji donosi saobraćaj pre nego što kupac odluči</li>
+          <li>sajt na temi iz 2012. &mdash; na mobilnom telefonu to vidi i kupac, ne samo Google</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h2><span class="num">06</span> Šta se realno može dobiti</h2>
+    <p>Bez istorije u Search Console-u ne mogu se obećavati brojevi, pa je ovde dat raspon zasnovan na stanju niše: slaba konkurencija među sajtovima firmi, star domen, usluge sa jasnom komercijalnom namerom i mali obim upita (Beograd i okolina, nekoliko stotina do nekoliko hiljada pretraga mesečno po grupi).</p>
+    <div class="t-scroll">
+      <table>
+        <thead><tr><th>Period</th><th>Šta se radi</th><th>Očekivani rezultat</th></tr></thead>
+        <tbody>
+          <tr><td class="nowrap">1&ndash;2 meseca</td><td>tehnika, spajanje duplikata, nova navigacija, title i opisi, schema, Search Console</td><td>sve strane merljive; prvi ulazi u rezultate po dugim upitima; lokalni profil dopunjen</td></tr>
+          <tr><td class="nowrap">3&ndash;4 meseca</td><td>šest glavnih uslužnih strana napisano, galerija povezana sa uslugama, forme i cene</td><td>prva strana rezultata po srednjim upitima („metalne garaže Beograd“, „nadstrešnice od leksana Beograd“), ulaz u lokalne rezultate po opštinama</td></tr>
+          <tr><td class="nowrap">5&ndash;6 meseci</td><td>strane po opštinama, prvi informativni tekstovi, rad na ocenama i imenicima</td><td>top 3&ndash;10 po glavnim upitima <em>kapije Beograd</em> i <em>ograde Beograd</em>; stabilan tok upita sa sajta i sa Google profila</td></tr>
+          <tr><td class="nowrap">6&ndash;12 meseci</td><td>širenje sadržaja, linkovi, održavanje</td><td>sajt kao glavni kanal upita, nezavisan od plaćenih oglasa i oglasnika</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <blockquote>
+      <p>Najveći deo rezultata dolazi iz prvog i drugog koraka, a oni ne zavise od budžeta za reklame: strane koje već postoje treba povezati, napisati i označiti. To je posao koji se radi jednom i radi godinama.</p>
+    </blockquote>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h2><span class="num">07</span> Nova struktura sajta</h2>
+    <p>Umesto 14 polupraznih strana &mdash; oko 25 do 30 strana sa jasnom namenom. Grupe su postavljene po tome kako kupci traže, a ne po tome kako je radionica organizovana.</p>
+    <div class="cluster-grid">
+
+      <div class="cluster">
+        <h4>Kapije</h4>
+        <ul>
+          <li>Kapije &mdash; glavna strana</li>
+          <li>Klizne kapije</li>
+          <li>Dvokrilne kapije</li>
+          <li>Kapije od kovanog gvožđa</li>
+          <li>Garažna i industrijska vrata</li>
+          <li>Automatika za kapije</li>
+        </ul>
+        <p class="hint">Najjača komercijalna grupa. „Klizne kapije“ i „automatika“ traže kupci koji već imaju budžet.</p>
+      </div>
+
+      <div class="cluster">
+        <h4>Ograde</h4>
+        <ul>
+          <li>Ograde &mdash; glavna strana</li>
+          <li>Dvorišne ograde</li>
+          <li>Panelne ograde (2D, 3D)</li>
+          <li>Ograde za terase i balkone</li>
+          <li>Kovane ograde</li>
+        </ul>
+        <p class="hint">Trenutno rasuto na tri strane (<code>/ograde/</code>, <code>/ograda/</code>, <code>/druga-ograd/</code>) koje se međusobno guše.</p>
+      </div>
+
+      <div class="cluster">
+        <h4>Gelenderi</h4>
+        <ul>
+          <li>Gelenderi &mdash; glavna strana</li>
+          <li>Gelenderi za stepenice</li>
+          <li>Unutrašnji gelenderi</li>
+          <li>Inox i kovani gelenderi</li>
+        </ul>
+        <p class="hint">Sada 16 reči teksta. Upiti su stabilni cele godine, konkurencija minimalna.</p>
+      </div>
+
+      <div class="cluster">
+        <h4>Leksan i terase</h4>
+        <ul>
+          <li>Nadstrešnice od leksana</li>
+          <li>Zatvaranje terasa leksanom</li>
+          <li>Nadstrešnice za ulaz i prozore</li>
+        </ul>
+        <p class="hint">Usluga koju kupci hvale u Google ocenama, a sajt je ne pominje nigde. Čista rupa u sadržaju.</p>
+      </div>
+
+      <div class="cluster">
+        <h4>Metalne garaže</h4>
+        <ul>
+          <li>Metalne garaže (postojeća strana, dopuniti)</li>
+          <li>Montažne garaže &mdash; dimenzije i cene</li>
+        </ul>
+        <p class="hint">Jedina strana koja već radi kako treba. Dodati dimenzije, raspon cena i galeriju.</p>
+      </div>
+
+      <div class="cluster">
+        <h4>Ostali bravarski radovi</h4>
+        <ul>
+          <li>Rešetke za prozore i vrata</li>
+          <li>Metalne konstrukcije i stepenice</li>
+          <li>Bravarske usluge &mdash; popravke</li>
+        </ul>
+        <p class="hint">Pokriva upite „bravar Beograd“ i hitne pozive.</p>
+      </div>
+
+      <div class="cluster">
+        <h4>Lokalne strane</h4>
+        <ul>
+          <li>Voždovac, Rakovica, Čukarica</li>
+          <li>Zemun, Novi Beograd</li>
+          <li>Grocka, Mladenovac, Barajevo</li>
+        </ul>
+        <p class="hint">Po jedna strana za opštinu, sa stvarnim radovima iz tog dela grada &mdash; ne kopije istog teksta sa zamenjenim imenom.</p>
+      </div>
+
+      <div class="cluster">
+        <h4>Poverenje i informacije</h4>
+        <ul>
+          <li>O nama (sa podacima firme, od 2001.)</li>
+          <li>Galerija sa filterima po usluzi</li>
+          <li>Kontakt sa formom i mapom</li>
+          <li>Cenovnik / kako se formira cena</li>
+          <li>Česta pitanja</li>
+        </ul>
+        <p class="hint">Dvadeset pet godina rada je argument koji nigde na sajtu nije iskorišćen.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h2><span class="num">08</span> Plan rada</h2>
+
+    <div class="cards">
+      <div class="phase">
+        <header>
+          <h3>Faza 1 &mdash; temelj</h3>
+          <span class="when">1. mesec</span>
+        </header>
+        <div class="t-scroll">
+          <table>
+            <thead><tr><th>Zadatak</th><th class="nowrap">Trud</th><th class="nowrap">Uticaj</th></tr></thead>
+            <tbody>
+              <tr><td>Search Console i Analytics 4, mapa sajta bez <code>.gz</code>, provera preusmerenja na <code>https://www</code></td><td class="nowrap">nizak</td><td><span class="tag c">visok</span></td></tr>
+              <tr><td>Nova navigacija: usluge u meniju, mrvice, kraj „siročićima“</td><td class="nowrap">srednji</td><td><span class="tag c">visok</span></td></tr>
+              <tr><td>Spajanje duplikata i 301 preusmerenja</td><td class="nowrap">srednji</td><td><span class="tag c">visok</span></td></tr>
+              <tr><td>Title i meta description za sve strane, H1 na početnoj</td><td class="nowrap">nizak</td><td><span class="tag c">visok</span></td></tr>
+              <tr><td>JSON-LD <code>LocalBusiness</code> i <code>Service</code></td><td class="nowrap">nizak</td><td><span class="tag w">srednji</span></td></tr>
+              <tr><td>Uklanjanje Google+ linkova, popravka mixed content, bezbednosna zaglavlja</td><td class="nowrap">nizak</td><td><span class="tag w">srednji</span></td></tr>
+              <tr><td>Dopuna Google Business profila</td><td class="nowrap">nizak</td><td><span class="tag c">visok</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="phase">
+        <header>
+          <h3>Faza 2 &mdash; sadržaj</h3>
+          <span class="when">2&ndash;4. mesec</span>
+        </header>
+        <div class="t-scroll">
+          <table>
+            <thead><tr><th>Zadatak</th><th class="nowrap">Trud</th><th class="nowrap">Uticaj</th></tr></thead>
+            <tbody>
+              <tr><td>Šest glavnih uslužnih strana, 700&ndash;1200 reči svaka</td><td class="nowrap">visok</td><td><span class="tag c">visok</span></td></tr>
+              <tr><td>Nove strane: nadstrešnice od leksana, zatvaranje terasa</td><td class="nowrap">srednji</td><td><span class="tag c">visok</span></td></tr>
+              <tr><td>Forma za upit sa prilogom fotografije na svakoj strani</td><td class="nowrap">srednji</td><td><span class="tag c">visok</span></td></tr>
+              <tr><td>Galerija po uslugama, <code>alt</code> opisi, WebP, odloženo učitavanje</td><td class="nowrap">srednji</td><td><span class="tag w">srednji</span></td></tr>
+              <tr><td>Raspon cena i strana „kako se formira cena“</td><td class="nowrap">nizak</td><td><span class="tag w">srednji</span></td></tr>
+              <tr><td>Postupak traženja Google ocena posle montaže</td><td class="nowrap">nizak</td><td><span class="tag c">visok</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="phase">
+        <header>
+          <h3>Faza 3 &mdash; širenje</h3>
+          <span class="when">5&ndash;6. mesec i dalje</span>
+        </header>
+        <div class="t-scroll">
+          <table>
+            <thead><tr><th>Zadatak</th><th class="nowrap">Trud</th><th class="nowrap">Uticaj</th></tr></thead>
+            <tbody>
+              <tr><td>Strane po opštinama sa stvarnim radovima</td><td class="nowrap">visok</td><td><span class="tag w">srednji</span></td></tr>
+              <tr><td>Informativni tekstovi: materijali, zaštita od korozije, dozvole, merenje</td><td class="nowrap">srednji</td><td><span class="tag w">srednji</span></td></tr>
+              <tr><td>Upis u imenike i oglasnike sa istim podacima firme</td><td class="nowrap">nizak</td><td><span class="tag w">srednji</span></td></tr>
+              <tr><td>Razmatranje prelaska na novu temu ili nov sajt na istom domenu</td><td class="nowrap">visok</td><td><span class="tag w">srednji</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h2><span class="num">09</span> Šta merimo</h2>
+    <div class="t-scroll">
+      <table>
+        <thead><tr><th>Pokazatelj</th><th>Sada</th><th>Cilj za 6 meseci</th></tr></thead>
+        <tbody>
+          <tr><td>Strane sa sadržajem iznad 700 reči</td><td class="num-cell">0</td><td class="num-cell">12&ndash;15</td></tr>
+          <tr><td>Strane bez internih linkova</td><td class="num-cell">6</td><td class="num-cell">0</td></tr>
+          <tr><td>Strane sa schema.org oznakama</td><td class="num-cell">0</td><td class="num-cell">sve</td></tr>
+          <tr><td>Upiti u prvih 10 rezultata</td><td>ne meri se</td><td class="num-cell">30&ndash;60</td></tr>
+          <tr><td>Google ocene</td><td class="num-cell">4</td><td class="num-cell">20+</td></tr>
+          <tr><td>Upiti sa sajta mesečno</td><td>nema forme</td><td>merljivo kroz formu i pozive</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Izveštaj svakog meseca: pozicije po grupama upita, saobraćaj iz Search Console-a, broj upita sa sajta i urađeni zadaci iz plana.</p>
+  </section>
+
+  <footer class="doc">
+    <p>SEO revizija sajta www.kapije-ograde.net &middot; oktobar 2026.</p>
+    <p>Podaci: obilazak sajta alatom Parsi (14 strana, 81 problem), ručna provera strana i pretrage za Beograd, Google Business Profile.</p>
+  </footer>
+
+</div>
